@@ -110,6 +110,11 @@ export const api = {
 };
 
 export function publicImage(path: string) {
-  if (path.startsWith('/')) return `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}${path}`;
+  if (path.startsWith('/')) {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.NODE_ENV === 'production'
+      ? 'https://shilp-website.vercel.app'
+      : 'http://localhost:3000');
+    return `${siteUrl}${path}`;
+  }
   return path;
 }
