@@ -17,6 +17,19 @@ const pageLabels: Record<BannerPage, string> = {
   plotted: 'Plotted',
 };
 
+const pageDescriptions: Record<BannerPage, string> = {
+  home: 'Homepage hero at the top of the home page.',
+  'about-us': 'Hero at the top of the About Us page.',
+  'our-team': 'Hero at the top of the Our Team page.',
+  careers: 'Hero at the top of the Careers page.',
+  'project-overview': 'Hero at the top of the Project Overview page.',
+  'our-work': 'Hero at the top of the Our Work page.',
+  'contact-us': 'Hero at the top of the Contact Us page.',
+  commercial: 'Image above the Commercial Paradigms list. The left/right layout and side feature image stay unchanged.',
+  residential: 'The Family Matters banner above the Residential section. The Residential section image stays static.',
+  plotted: 'The Context Matters banner above the Plotted section. The Plotted section side image stays static.',
+};
+
 const pages = Object.keys(pageLabels) as BannerPage[];
 
 function emptyBanner(page: BannerPage): PageBannerDraft {
@@ -155,7 +168,7 @@ export function PageBannersPage() {
         <div>
           <p className="eyebrow">WEBSITE CONTENT</p>
           <h1>Page Banner Management</h1>
-          <p className="muted">Upload separate desktop and mobile banners for the homepage and company pages. Project detail banners stay in Projects.</p>
+          <p className="muted">Upload separate desktop and mobile images for page banners, homepage story banners and category images. The commercial feature image beside the project list stays unchanged.</p>
         </div>
       </header>
       {error && <div role="alert" className="notice-error mb-5">{error}</div>}
@@ -171,6 +184,7 @@ export function PageBannersPage() {
                 <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4 sm:px-7">
                   <div>
                     <h2 className="text-base font-semibold text-slate-900">{pageLabels[page]} Banner</h2>
+                    <p className="mt-1 text-xs text-slate-600">{pageDescriptions[page]}</p>
                     <p className="mt-1 text-xs text-slate-500">Each image saves immediately. Mobile artwork is used below 768px and desktop artwork at 768px and above; either image is used until both are uploaded.</p>
                   </div>
                   {savingPage === page && <span role="status" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600"><LoaderCircle size={15} className="animate-spin" /> Saving changes…</span>}

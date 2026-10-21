@@ -172,6 +172,16 @@ export const api = {
 };
 
 export function publicImage(path: string) {
+  try {
+    const url = new URL(path);
+    if (['localhost', '127.0.0.1'].includes(url.hostname) && url.pathname.startsWith('/api/uploads/')) {
+      return `${apiUrl}${url.pathname}${url.search}`;
+    }
+  } catch {
+    // Keep relative public assets below on the configured website origin.
+  }
+
+  if (path.startsWith('/api/uploads/')) return `${apiUrl}${path}`;
   if (path.startsWith('/')) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.NODE_ENV === 'production'
       ? 'https://shilp-website.vercel.app'
