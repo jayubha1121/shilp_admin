@@ -1,5 +1,50 @@
 export type ProjectCategory = 'commercial' | 'residential' | 'plotted';
 export type ProjectState = 'Upcoming' | 'On-going' | 'Completed';
+export type ProjectTreeType = ProjectCategory;
+
+export interface ProjectTreeItem {
+  id: string;
+  year: string;
+  title: string;
+  location: string;
+  type: ProjectTreeType;
+  image: string;
+  imageAlt: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ProjectTreeDraft = Omit<ProjectTreeItem, 'id' | 'createdAt' | 'updatedAt'>;
+export type JobType = 'Full-time' | 'Part-time' | 'Contract' | 'Internship';
+
+export interface JobOpening {
+  id: string;
+  title: string;
+  description: string;
+  responsibilities: string;
+  qualifications: string;
+  jobType: JobType;
+  location: string;
+  experience: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type JobOpeningDraft = Omit<JobOpening, 'id' | 'createdAt' | 'updatedAt'>;
+export type BannerPage = 'home' | 'about-us' | 'our-team' | 'careers' | 'project-overview' | 'our-work' | 'contact-us' | 'commercial' | 'residential' | 'plotted';
+
+export interface PageBanner {
+  id?: string;
+  page: BannerPage;
+  desktopImage: string;
+  mobileImage: string;
+  imageAlt: string;
+  updatedAt?: string;
+}
+
+export type PageBannerDraft = Omit<PageBanner, 'id' | 'updatedAt'>;
 
 export interface ProjectImage {
   title: string;
@@ -96,6 +141,23 @@ export const api = {
   logout: () => request<{ success: true }>('/api/auth/logout', { method: 'POST' }),
   check: () => request<{ success: true; user: { email: string; name: string } }>('/api/auth/check'),
   projects: (query: string) => request<{ data: Project[]; total: number }>(`/api/projects?all=true&${query}`),
+  projectTree: (query: string) => request<{ data: ProjectTreeItem[]; total: number }>(`/api/project-tree?all=true&${query}`),
+  saveProjectTreeItem: (draft: ProjectTreeDraft, id?: string) => request<{ data: ProjectTreeItem }>(id ? `/api/project-tree/${encodeURIComponent(id)}` : '/api/project-tree', {
+    method: id ? 'PUT' : 'POST',
+    body: JSON.stringify(draft),
+  }),
+  archiveProjectTreeItem: (id: string) => request<{ success: true }>(`/api/project-tree/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  jobOpenings: (query: string) => request<{ data: JobOpening[]; total: number }>(`/api/job-openings?all=true&${query}`),
+  saveJobOpening: (draft: JobOpeningDraft, id?: string) => request<{ data: JobOpening }>(id ? `/api/job-openings/${encodeURIComponent(id)}` : '/api/job-openings', {
+    method: id ? 'PUT' : 'POST',
+    body: JSON.stringify(draft),
+  }),
+  archiveJobOpening: (id: string) => request<{ success: true }>(`/api/job-openings/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  pageBanners: () => request<{ data: PageBanner[] }>('/api/page-banners'),
+  savePageBanner: (draft: PageBannerDraft) => request<{ data: PageBanner }>(`/api/page-banners/${encodeURIComponent(draft.page)}`, {
+    method: 'PUT',
+    body: JSON.stringify(draft),
+  }),
   project: (id: string) => request<{ data: Project }>(`/api/projects/${encodeURIComponent(id)}`),
   save: (draft: ProjectDraft, id?: string) => request<{ data: Project }>(id ? `/api/projects/${encodeURIComponent(id)}` : '/api/projects', {
     method: id ? 'PUT' : 'POST',

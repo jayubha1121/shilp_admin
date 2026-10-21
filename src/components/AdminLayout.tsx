@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Building2, ChevronRight, LayoutDashboard, LogOut, Menu, X } from 'lucide-react';
+import { BriefcaseBusiness, Building2, ChevronRight, Image, LayoutDashboard, Layers, LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '../api';
@@ -47,8 +47,17 @@ export function AdminLayout({ children, adminName }: { children: ReactNode; admi
       <Link href="/admin/dashboard" title="Overview" onClick={() => setMobileOpen(false)} className={`side-link ${pathname === '/admin/dashboard' ? 'active' : ''}`}>
         <LayoutDashboard size={18} /> <span className="side-link-label">Overview</span> <ChevronRight className="side-chevron" size={15} />
       </Link>
+      <Link href="/admin/page-banners" title="Page Banners" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/page-banners') ? 'active' : ''}`}>
+        <Image size={18} /> <span className="side-link-label">Page Banners</span> <ChevronRight className="side-chevron" size={15} />
+      </Link>
       <Link href="/admin/projects" title="Projects" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/projects') ? 'active' : ''}`}>
         <Building2 size={18} /> <span className="side-link-label">Projects</span> <ChevronRight className="side-chevron" size={15} />
+      </Link>
+      <Link href="/admin/project-tree" title="Project Tree" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/project-tree') ? 'active' : ''}`}>
+        <Layers size={18} /> <span className="side-link-label">Project Tree</span> <ChevronRight className="side-chevron" size={15} />
+      </Link>
+      <Link href="/admin/job-openings" title="Job Openings" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/job-openings') ? 'active' : ''}`}>
+        <BriefcaseBusiness size={18} /> <span className="side-link-label">Job Openings</span> <ChevronRight className="side-chevron" size={15} />
       </Link>
       <div className="sidebar-bottom"><div className="sidebar-user"><span className="user-avatar">{adminName.charAt(0).toUpperCase()}</span><span className="sidebar-user-details"><strong>{adminName}</strong><small>Administrator</small></span></div><button className="icon-button" title="Sign out" aria-label="Sign out" onClick={signOut}><LogOut size={17} /></button></div>
     </>
