@@ -23,6 +23,7 @@ export function ProjectTreePage() {
   const [search, setSearch] = useState('');
   const [year, setYear] = useState('');
   const [type, setType] = useState('');
+  const [status, setStatus] = useState<'active' | 'archived' | 'all'>('active');
   const [page, setPage] = useState(0);
   const [refresh, setRefresh] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ export function ProjectTreePage() {
       if (search.trim()) query.set('search', search.trim());
       if (/^[12]\d{3}$/.test(year.trim())) query.set('year', year.trim());
       if (type) query.set('type', type);
+      if (status !== 'all') query.set('status', status);
       try {
         const result = await api.projectTree(query.toString());
         if (current) {
@@ -59,7 +61,7 @@ export function ProjectTreePage() {
       current = false;
       window.clearTimeout(timeout);
     };
-  }, [search, year, type, page, refresh]);
+  }, [search, year, type, status, page, refresh]);
 
   function startCreate() {
     setEditing(null);
@@ -144,6 +146,7 @@ export function ProjectTreePage() {
           <label className="search-field"><Search size={17} /><input placeholder="Search title or location" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} /></label>
           <label className="filter-select"><span>Year</span><input inputMode="numeric" maxLength={4} placeholder="All years" value={year} onChange={(event) => { setYear(event.target.value.replace(/\D/g, '')); setPage(0); }} /></label>
           <label className="filter-select"><span>Category</span><select value={type} onChange={(event) => { setType(event.target.value); setPage(0); }}><option value="">All categories</option>{types.map((itemType) => <option key={itemType} value={itemType}>{itemType}</option>)}</select></label>
+          <label className="filter-select"><span>Status</span><select value={status} onChange={(event) => { setStatus(event.target.value as 'active' | 'archived' | 'all'); setPage(0); }}><option value="active">Active</option><option value="archived">Archived</option><option value="all">All statuses</option></select></label>
           <span className="result-count">{total} records</span>
         </div>
         {error && !dialogOpen && <div className="notice-error">{error}</div>}
