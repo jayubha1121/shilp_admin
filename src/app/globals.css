@@ -97,3 +97,22 @@
 @media(max-width:1000px){.floor-plan-grid,.project-image-grid,.update-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.banner-upload-grid{gap:12px}}
 @media(max-width:680px){.editor-section{padding:17px 14px}.editor-section .form-panel-heading h2{font-size:16px}.banner-upload-grid{grid-template-columns:1fr}.asset-field-wide .asset-dropzone{aspect-ratio:16/8}.about-image-grid{grid-template-columns:1fr}.about-image-grid .asset-dropzone{max-width:420px}.floor-plan-grid,.project-image-grid,.update-grid,.repeat-grid{grid-template-columns:1fr}.repeat-section-heading{align-items:flex-start}.repeat-section-heading>.form-panel-heading{min-width:0}.repeat-section-heading>.secondary-button{min-height:34px;padding-inline:8px}.editor-submit-row{position:sticky;bottom:0;z-index:10;margin-inline:-14px;padding:12px 14px;background:#f3f4f1ed;backdrop-filter:blur(12px)}.editor-submit-row .primary-button{min-width:130px}.asset-change{opacity:1}}
 @media(max-width:420px){.editor-section .form-panel-heading{gap:9px}.editor-section .form-panel-heading>span{flex-basis:27px;width:27px;height:27px;font-size:11px}.repeat-section-heading{flex-direction:column}.repeat-section-heading>.secondary-button{align-self:flex-start}.editor-submit-row .primary-button{min-width:120px;padding-inline:10px}.editor-submit-row .back-link{font-size:10px}}
+
+/* Keep admin controls usable on narrow phones and small tablets. */
+@media(max-width:760px){
+  .admin-main,.page-wrap,.table-panel,.form-panel,.editor-section{min-width:0;max-width:100%}
+  .page-header{flex-wrap:wrap}
+  .page-header>div{flex:1 1 220px}
+  .page-header>.primary-button{max-width:100%}
+  .table-scroll{max-width:100%;overscroll-behavior-x:contain}
+  .table-toolbar{min-width:0}
+  .table-footer{gap:8px;padding-inline:10px}
+  .table-footer>span{min-width:0;overflow-wrap:anywhere}
+}
+@media(max-width:380px){
+  .admin-main{padding-inline:14px}
+  .mobile-topbar{padding-inline:14px}
+  .page-header h1{font-size:26px}
+  .table-toolbar{padding-inline:11px}
+  .table-footer{font-size:9px}
+}

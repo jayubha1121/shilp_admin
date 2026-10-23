@@ -1,6 +1,11 @@
 export type ProjectCategory = 'commercial' | 'residential' | 'plotted';
-export type ProjectState = 'Upcoming' | 'On-going' | 'Completed';
+export type ProjectState = 'Upcoming' | 'On-going' | 'Under Construction' | 'Completed';
 export type ProjectTreeType = ProjectCategory;
+export const projectCategoryLabels: Record<ProjectCategory, string> = {
+  commercial: 'Commercial Development',
+  residential: 'Residential Development',
+  plotted: 'Plotted Development',
+};
 
 export interface ProjectTreeItem {
   id: string;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from 'react';
 import { ChevronLeft, ChevronRight, Pencil, Plus, Search, Trash2, Upload, X } from 'lucide-react';
-import { api, publicImage, type ProjectTreeDraft, type ProjectTreeItem, type ProjectTreeType } from '../../api';
+import { api, projectCategoryLabels, publicImage, type ProjectTreeDraft, type ProjectTreeItem, type ProjectTreeType } from '../../api';
 
 const emptyDraft: ProjectTreeDraft = {
   year: String(new Date().getFullYear()),
@@ -145,7 +145,7 @@ export function ProjectTreePage() {
         <div className="table-toolbar">
           <label className="search-field"><Search size={17} /><input placeholder="Search title or location" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} /></label>
           <label className="filter-select"><span>Year</span><input inputMode="numeric" maxLength={4} placeholder="All years" value={year} onChange={(event) => { setYear(event.target.value.replace(/\D/g, '')); setPage(0); }} /></label>
-          <label className="filter-select"><span>Category</span><select value={type} onChange={(event) => { setType(event.target.value); setPage(0); }}><option value="">All categories</option>{types.map((itemType) => <option key={itemType} value={itemType}>{itemType}</option>)}</select></label>
+          <label className="filter-select"><span>Category</span><select value={type} onChange={(event) => { setType(event.target.value); setPage(0); }}><option value="">All categories</option>{types.map((itemType) => <option key={itemType} value={itemType}>{projectCategoryLabels[itemType]}</option>)}</select></label>
           <label className="filter-select"><span>Status</span><select value={status} onChange={(event) => { setStatus(event.target.value as 'active' | 'archived' | 'all'); setPage(0); }}><option value="active">Active</option><option value="archived">Archived</option><option value="all">All statuses</option></select></label>
           <span className="result-count">{total} records</span>
         </div>
@@ -158,7 +158,7 @@ export function ProjectTreePage() {
                 <tr key={item.id}>
                   <td><div className="project-cell"><img src={publicImage(item.image)} alt="" /><span><strong>{item.title}</strong><small>{item.location}</small></span></div></td>
                   <td>{item.year}</td>
-                  <td><span className="category-label">{item.type}</span></td>
+                  <td><span className="category-label">{projectCategoryLabels[item.type]}</span></td>
                   <td><span className={`table-status ${item.isActive ? 'status-active' : 'status-archived'}`}><i />{item.isActive ? 'Active' : 'Archived'}</span></td>
                   <td><div className="row-actions"><button type="button" className="icon-button" onClick={() => startEdit(item)} aria-label={`Edit ${item.title}`}><Pencil size={16} /></button><button type="button" className="icon-button danger-action" onClick={() => void archive(item)} aria-label={`Archive ${item.title}`}><Trash2 size={16} /></button></div></td>
                 </tr>
@@ -182,7 +182,7 @@ export function ProjectTreePage() {
               {error && <div className="notice-error">{error}</div>}
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-slate-700">Year<input className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-slate-500" required inputMode="numeric" pattern="[12][0-9]{3}" maxLength={4} value={draft.year} onChange={(event) => setDraft({ ...draft, year: event.target.value.replace(/\D/g, '').slice(0, 4) })} /></label>
-                <label className="block text-sm font-medium text-slate-700">Project type<select className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal capitalize outline-none focus:border-slate-500" value={draft.type} onChange={(event) => setDraft({ ...draft, type: event.target.value as ProjectTreeType })}>{types.map((itemType) => <option key={itemType} value={itemType}>{itemType}</option>)}</select></label>
+                <label className="block text-sm font-medium text-slate-700">Project type<select className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal" value={draft.type} onChange={(event) => setDraft({ ...draft, type: event.target.value as ProjectTreeType })}>{types.map((itemType) => <option key={itemType} value={itemType}>{projectCategoryLabels[itemType]}</option>)}</select></label>
                 <label className="block text-sm font-medium text-slate-700 sm:col-span-2">Project title<input className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-slate-500" required maxLength={120} value={draft.title} onChange={(event) => setDraft({ ...draft, title: event.target.value })} /></label>
                 <label className="block text-sm font-medium text-slate-700 sm:col-span-2">Location<input className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 font-normal outline-none focus:border-slate-500" required maxLength={160} value={draft.location} onChange={(event) => setDraft({ ...draft, location: event.target.value })} /></label>
               </div>
