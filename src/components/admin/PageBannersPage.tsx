@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { Check, ImagePlus, LoaderCircle, Upload, X } from 'lucide-react';
 import { api, publicImage, type BannerPage, type PageBannerDraft } from '../../api';
 
 const pageLabels: Record<BannerPage, string> = {
+  blog: 'Blogs',
   home: 'Homepage',
   'about-us': 'About Us',
   'our-team': 'Our Team',
@@ -18,6 +19,7 @@ const pageLabels: Record<BannerPage, string> = {
 };
 
 const pageDescriptions: Record<BannerPage, string> = {
+  blog: 'Hero banner at the top of the blog listing page.',
   home: 'Homepage hero at the top of the home page.',
   'about-us': 'Hero at the top of the About Us page.',
   'our-team': 'Hero at the top of the Our Team page.',
@@ -173,7 +175,7 @@ export function PageBannersPage() {
       </header>
       {error && <div role="alert" className="notice-error mb-5">{error}</div>}
       {statusMessage && <div role="status" className="mb-5 border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{statusMessage}</div>}
-      {loading && <div className="table-empty">Loading page banners…</div>}
+      {loading && <div className="table-empty">Loading page bannersâ€¦</div>}
       {!loading && (
         <div className="grid gap-5">
           {pages.map((page) => {
@@ -187,7 +189,7 @@ export function PageBannersPage() {
                     <p className="mt-1 text-xs text-slate-600">{pageDescriptions[page]}</p>
                     <p className="mt-1 text-xs text-slate-500">Each image saves immediately. Mobile artwork is used below 768px and desktop artwork at 768px and above; either image is used until both are uploaded.</p>
                   </div>
-                  {savingPage === page && <span role="status" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600"><LoaderCircle size={15} className="animate-spin" /> Saving changes…</span>}
+                  {savingPage === page && <span role="status" className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600"><LoaderCircle size={15} className="animate-spin" /> Saving changesâ€¦</span>}
                   {savedPage === page && savingPage !== page && <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700"><Check size={15} /> Saved</span>}
                 </header>
                 <div className="grid grid-cols-2 gap-3 p-3 sm:gap-5 sm:p-7">
@@ -218,7 +220,7 @@ export function PageBannersPage() {
                           skipAltBlurSave.current = true;
                         }
                       }}>
-                        {uploading === `${page}:${kind}` ? <><LoaderCircle size={14} className="animate-spin" /> Uploading…</> : <><Upload size={14} /> Replace {label.replace(' Banner', '')}</>}
+                        {uploading === `${page}:${kind}` ? <><LoaderCircle size={14} className="animate-spin" /> Uploadingâ€¦</> : <><Upload size={14} /> Replace {label.replace(' Banner', '')}</>}
                         <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" disabled={isUploading || savingPage !== null} onChange={(event) => void uploadImage(page, kind, event)} />
                       </label>
                     </div>

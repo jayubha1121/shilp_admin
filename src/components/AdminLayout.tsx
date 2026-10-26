@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from 'react';
-import { BriefcaseBusiness, Building2, ChevronRight, Image, LayoutDashboard, Layers, LogOut, Menu, X } from 'lucide-react';
+﻿import { useState, type ReactNode } from 'react';
+import { BriefcaseBusiness, Building2, ChevronRight, Image, LayoutDashboard, Layers, NotebookPen, LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '../api';
@@ -55,6 +55,9 @@ export function AdminLayout({ children, adminName }: { children: ReactNode; admi
       </Link>
       <Link href="/admin/project-tree" title="Project Tree" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/project-tree') ? 'active' : ''}`}>
         <Layers size={18} /> <span className="side-link-label">Project Tree</span> <ChevronRight className="side-chevron" size={15} />
+      </Link>
+      <Link href="/admin/blogs" title="Blogs" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/blogs') ? 'active' : ''}`}>
+        <NotebookPen size={18} /> <span className="side-link-label">Blogs</span> <ChevronRight className="side-chevron" size={15} />
       </Link>
       <Link href="/admin/job-openings" title="Job Openings" onClick={() => setMobileOpen(false)} className={`side-link ${pathname?.startsWith('/admin/job-openings') ? 'active' : ''}`}>
         <BriefcaseBusiness size={18} /> <span className="side-link-label">Job Openings</span> <ChevronRight className="side-chevron" size={15} />

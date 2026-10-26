@@ -1,4 +1,4 @@
-export type ProjectCategory = 'commercial' | 'residential' | 'plotted';
+﻿export type ProjectCategory = 'commercial' | 'residential' | 'plotted';
 export type ProjectState = 'Upcoming' | 'On-going' | 'Under Construction' | 'Completed';
 export type ProjectTreeType = ProjectCategory;
 export const projectCategoryLabels: Record<ProjectCategory, string> = {
@@ -38,7 +38,32 @@ export interface JobOpening {
 }
 
 export type JobOpeningDraft = Omit<JobOpening, 'id' | 'createdAt' | 'updatedAt'>;
-export type BannerPage = 'home' | 'about-us' | 'our-team' | 'careers' | 'project-overview' | 'our-work' | 'contact-us' | 'commercial' | 'residential' | 'plotted';
+export type BannerPage = 'blog' | 'home' | 'about-us' | 'our-team' | 'careers' | 'project-overview' | 'our-work' | 'contact-us' | 'commercial' | 'residential' | 'plotted';
+
+export type BlogStatus = 'draft' | 'published';
+
+export interface BlogPoint {
+  title: string;
+  subtitle: string;
+  content: string;
+  imageUrl?: string;
+  imageAlt?: string;
+}
+
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  author: string;
+  date: string;
+  status: BlogStatus;
+  imageUrl: string;
+  imageAlt: string;
+  points: BlogPoint[];
+}
+
+export type BlogDraft = Omit<Blog, 'id'>;
 
 export interface PageBanner {
   id?: string;
@@ -158,6 +183,12 @@ export const api = {
     body: JSON.stringify(draft),
   }),
   archiveJobOpening: (id: string) => request<{ success: true }>(`/api/job-openings/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  blogs: () => request<{ data: Blog[]; total: number }>('/api/blogs?all=true'),
+  saveBlog: (draft: BlogDraft, id?: string) => request<{ data: Blog }>(id ? `/api/blogs/${encodeURIComponent(id)}` : '/api/blogs', {
+    method: id ? 'PUT' : 'POST',
+    body: JSON.stringify(draft),
+  }),
+  deleteBlog: (id: string) => request<{ success: true }>(`/api/blogs/${encodeURIComponent(id)}`, { method: 'DELETE' }),
   pageBanners: () => request<{ data: PageBanner[] }>('/api/page-banners'),
   savePageBanner: (draft: PageBannerDraft) => request<{ data: PageBanner }>(`/api/page-banners/${encodeURIComponent(draft.page)}`, {
     method: 'PUT',
